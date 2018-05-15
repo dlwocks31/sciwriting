@@ -3,12 +3,14 @@
 {% block content %}
 <div class="row">
 	<div class="col">
-		<h1 class="text-center emptyline">파기글주거</h1>
+		<h1 class="text-center emptyline">실험중..</h1>
+		{% block exp %}
+		{% endblock %}
 	</div>
 </div>
 <div class="row justify-content-center">
 	<div class="col-3">
-		<a class="btn btn-primary btn-block" href="{% url 'main' %}">실험 시작</a>
+		<a class="btn btn-primary btn-block" href="{% url 'end' %}">실험 종료</a>
 	</div>
 </div>
 {% endblock %}
