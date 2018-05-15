@@ -5,7 +5,7 @@ String.prototype.format = function() {
   }
   return a
 }
-EXPCNT = 10
+
 function genchoice(i1, i2) {
 	correctAt = Math.floor(Math.random() * 4)
 	ret = [0,0,0,0];
@@ -34,37 +34,36 @@ function genchoice(i1, i2) {
 	}
 	return ret;
 }
-lastclick = -1;
-function mainexp() {
-	data = {'questions':[],'answeredTime':[],'iscorrect':[]}
-	ils = Array(10).keys()
-	console.log(lis);
-	ils.map(i => {
-		i1 = Math.round(Math.random()*12+3);
-		i2 = Math.round(Math.random()*13+2);
-		ans = i1 * i2;
-		choices = genchoice(i1, i2);
-		data['questions'].push("{0} {1}".format(i1, i2));
-		console.log("i1={0}, i2={1}".format(i1, i2));
-		$('#question')
-			.text("{0}&times;{1}=??".format(i1, i2));
-		arr = [0,1,2,3];
-		pms = arr.map((j) => {
-			return new Promise((resolve, reject) => {
-				$('#btn'+ j)
-					.text(choices[j])
-					.on('click', () => {resolve(j)});		
-				});			
-			})
-		Promise.any(pms).then((lastclick) => {
-			if(ans == choices[lastclick]) {
-				data['iscorrect'].push(1);
-			} else {
-				data['iscorrect'].push(0);
-			}
-			data['answeredTime'].push(timecnt);
-		});
-	})
+let ans, choices;
+data = {'questions':[],'answeredTime':[],'iscorrect':[]};
+function putquestion() {
+	i1 = Math.round(Math.random()*12+3);
+	i2 = Math.round(Math.random()*13+2);
+	ans = i1 * i2;
+	choices = genchoice(i1, i2);
+	data['questions'].push("{0} {1}".format(i1, i2));
+	$('#question')
+		.text("{0}&times;{1}=??".format(i1, i2));
+	for(j=0; j<4; j++)
+		$('#btn'+ j).text(choices[j]);
+}
+MAXQCNT = 10
+currqcnt = 0
+function btnclick(i) {
+	if(ans == choices[i-1]) {
+		data['iscorrect'].push(1);
+	} else {
+		data['iscorrect'].push(0);
+	}
+	data['answeredTime'].push(timecnt);
+	currqcnt++;
+	$('#remainq')
+		.text(currqcnt + '/' + MAXQCNT);
+	putquestion();
+	if(MAXQCNT == currqcnt)
+		experimentend();
+}
+function experimentend() {
 	$('#infotext')
 		.text('실험이 종료되었습니다! 잠시 후 자동으로 다음 화면으로 넘어갑니다.');
 	$('.exprow')
@@ -76,7 +75,7 @@ function mainexp() {
 	setTimeout(function() {
 		$('#mainform').submit();	
 	}, 1500);		
-};
+}
 timecnt = 0;
 $( document )
 	.ready( function() {
@@ -85,6 +84,8 @@ $( document )
 				.removeClass('hide');
 			$('#infotext')
 				.text('실험이 진행중입니다.')
+			$('#remainq')
+				.text('0/'+MAXQCNT);
 			$(this)
 				.text('실험 종료')
 				.off('click')
@@ -103,7 +104,7 @@ $( document )
 					clearInterval(id);
 				}
 			}, 100);
-			mainexp();
+			putquestion();
 			return false;
 		})
 });
