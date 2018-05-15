@@ -1,3 +1,16 @@
 .emptyline {
 	margin-top: 15px;
 }
+
+.answerbtn, .answerbtn:hover {
+	border: 1px solid black;
+}
+
+.answerbtn {
+	height: 100%;
+	font-size: 150%;
+}
+
+.answerrow {
+	height: 70px;
+}
