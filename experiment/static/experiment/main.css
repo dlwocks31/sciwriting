@@ -14,3 +14,7 @@
 .answerrow {
 	height: 70px;
 }
+
+.hide {
+	display: none;
+}

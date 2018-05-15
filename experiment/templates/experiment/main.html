@@ -1,14 +1,19 @@
 {% extends 'experiment/base.html' %}
 
 {% block content %}
+<div class="row emptyline">
+	<div class="col">
+		<h3 class="text-center" id="infotext">실험 시작 버툰을 눌러 시작해 주세요.</p>
+	</div>
+</div>
 {% block exp %}
 {% endblock %}
-<div class="row emptyline">
+<div class="row emptyline hide exprow">
 	<div class="col-12">
 		<h3 class="text-center" id="question">5&times;3=?</h3>
 	</div>
 </div>
-<div class="row answerrow emptyline justify-content-center">
+<div class="row answerrow emptyline justify-content-center hide exprow">
 	<div class="col-3 col-md-2">
 		<a class="btn btn-light btn-block answerbtn" id="btn1">15</a>
 	</div>
@@ -24,7 +29,11 @@
 </div>
 <div class="row justify-content-center emptyline">
 	<div class="col-3">
-		<a class="btn btn-primary btn-block" href="{% url 'end' %}">실험 종료</a>
+		<a class="btn btn-primary btn-block" id="mainbtn" href="{% url 'end' %}">실험 시작</a>
 	</div>
 </div>
+<form action="{% url 'postdata' %}" method="post" class="hide" id="mainform">
+	{% csrf_token %}
+	<input type="text" id="maindata" name="data">
+</form>
 {% endblock %}
