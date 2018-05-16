@@ -1,30 +1,31 @@
 {% extends 'experiment/base.html' %}
 
 {% block content %}
-<div class="row">
+<div class="row justify-content-center">
 	<div class="col">
-		<h3 class="text-center emptyline title">실험이 성공적으로 종료되었습니다. 수고하셨습니다.</h3>
-		<p>이 실험이 정확히 무슨 실험이였고, 어떻게 쓰이는지 궁금하시면, 실험이 모두 끝난 뒤 이 과제의 결과물로 제출될 포스터를 받아보세요!</p>
+		<h3 class="text-center emptyline title">실험이 성공적으로 끝났습니다. 수고하셨습니다.</h3>
+		<p class="text-center  emptyline">이 실험이 정확히 무슨 실험이였고, 실험 결과가 어떻게 쓰이는지 궁금하시면, 실험이 종료된 뒤 이 과제의 결과물로 제출될 포스터를 이메일로 받아보세요!</p>
+		<p class="text-center">모든 개인 정보는 실험 종료 후 파기됩니다.</p>
 	</div>
 </div>
 <div class="row justify-content-center">
-	<div class="col-10 col-md-12">
+	<div class="col-10 col-md-11">
 		<form action="{% url 'postinfo' %}" method="post">
 			{% csrf_token %}
 			<div class="emptyline clear">
-				<input type="checkbox" name="report" id="reportchk" class="form-check-input">
-				<label>이 과제 포스터를 받겟습니다.</label>
+				<input type="checkbox" name="poster" id="reportchk" class="form-check-input">
+				<label>포스터를 받겟습니다.</label>
 			</div>
 			<div class="hide" id="emaildiv">
 				<label id="emaillbl">이메일 주소를 입력해 주세요.</label>
 				<input type="email" name="email" id="emailtxt" class="form-control">
 			</div>
 			<div class="emptyline clear">
-				<input type="checkbox" name="checkbox" id="lottochk" class="form-check-input">
+				<input type="checkbox" name="lotto" id="lottochk" class="form-check-input">
 				<label>경품 추첨에 참가하겟습니다.</label>
 			</div>
 			<div class="hide" id="phonediv">
-				<label id="phonelbl">휴대폰 번호를 입력해 주세요.(01012345678)</label>
+				<label id="phonelbl">중복 응모를 방지하기 위해 휴대폰 번호를 입력해 주세요.(01012345678)</label>
 				<input type="text" name="phone" id="phonttxt" class="form-control">
 			</div>
 			<input type="submit" class="btn btn-primary emptyline" value="완료">

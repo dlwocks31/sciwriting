@@ -116,6 +116,7 @@ $( document )
 			data['mode'] = 'notime';
 			hastime = false;
 		}
+		$('input[type=checkbox]').prop('checked', false);
 		$('#mainbtn').click(function() {
 			$('.exprow')
 				.removeClass('hide');
