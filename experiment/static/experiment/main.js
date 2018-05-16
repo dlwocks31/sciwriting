@@ -9,19 +9,23 @@ let ans, choices;
 data = {'mode':0,'questions':[],'answeredTime':[],'iscorrect':[]};
 hastime = true;
 timecnt = 0;
-MAXQCNT = 10
+MAXQCNT = 20
 currqcnt = 0
 hasquestion = false;
 var timer;
 function genchoice(i1, i2) {
 	correctAt = Math.floor(Math.random() * 4)
 	ret = [0,0,0,0];
+	selected = [false,false,false,false,false,false,false,false];
 	for(i=0;i<4;i++) {
 		if(correctAt == i) {
 			ret[i] = i1*i2;
 			continue;
 		}
 		t = Math.floor(Math.random()*8);
+		while(selected[t] || (i1*i2-10<=0 && t == 7))
+			t = Math.floor(Math.random()*8);
+		selected[t] = true;
 		if(t == 0)
 			ret[i] = (i1-1)*i2;
 		else if(t == 1)
@@ -35,16 +39,22 @@ function genchoice(i1, i2) {
 		else if(t == 5)
 			ret[i] = i1*i2+1;
 		else if(t == 6)
-			ret[i] = i1*i2+2;
+			ret[i] = i1*i2+10;
 		else if(t == 7)
-			ret[i] = i1*i2+5;
+			ret[i] = i1*i2-10;
 	}
+	str = 'selected choice:'
+	for(i=0;i<8;i++) {
+		if(selected[i])
+			str=str+i+' ';
+	}
+	console.log(str);
 	return ret;
 }
 
 function putquestion() {
-	i1 = Math.round(Math.random()*12+3);
-	i2 = Math.round(Math.random()*13+2);
+	i1 = Math.round(Math.random()*11+4);
+	i2 = Math.round(Math.random()*11+4);
 	ans = i1 * i2;
 	choices = genchoice(i1, i2);
 	data['questions'].push("{0} {1}".format(i1, i2));
@@ -128,9 +138,9 @@ $( document )
 				.text('실험 종료')
 				.off('click')
 				.addClass('hide');
-			if(hastime) {
-				timer = setInterval(function() {
-					timecnt++;
+			timer = setInterval(function() {
+				timecnt++;
+				if(hastime) {
 					min = String(Math.floor(timecnt/600));
 					sec = String(Math.floor((timecnt%600)/10));
 					msec = String(timecnt%10);
@@ -138,12 +148,12 @@ $( document )
 						sec = "0" + sec;
 					}
 					$('#time')
-						.text("{0}:{1}.{2}".format(min, sec, msec));
-					if(timecnt == 32767) {
-						clearInterval(timer);
-					}
-				}, 100);				
-			}
+						.text("{0}:{1}.{2}".format(min, sec, msec));					
+				}
+				if(timecnt == 32767) {
+					clearInterval(timer);
+				}
+			}, 100);				
 			putquestion();
 			return false;
 		});

@@ -19,20 +19,21 @@ def index(request):
         u.save()
         request.session['uid'] = u.id
         request.session['datapostcnt'] = 0
-    print('uid is %d' % request.session['uid'])
+    print('index loaded. uid is %d' % request.session['uid'])
     return render(request, 'experiment/index.html')
 
 def main(request):
     if 'uid' not in request.session:
         raise PermissionDenied
     mode = randint(1, 2)
+    print('main loaded. uid is %d' % request.session['uid'])
     return render(request, 'experiment/main%d.html' % mode)
 
 @require_POST
 def postdata(request):
     if 'uid' not in request.session:
         raise PermissionDenied
-    print('request.session:', dict(request.session))
+    print('postdata called by uid=%d.data=%s'%(request.session['uid'], request.POST.get('data')))
     u = User.objects.get(id=request.session['uid'])
     r = Result(uid=u, 
                date=timezone.now(),
@@ -57,6 +58,7 @@ def postinfo(request):
     email = request.POST['email'] if poster else ''
     lotto = True if 'lotto' in request.POST else False
     phone = request.POST['phone'] if lotto else ''
+    print("info posted by uid=%d. poster=%d,lotto=%d,email=%s,phone=%s."%(request.session['uid'],poster,lotto,email,phone))
     s = Survey(is_poster=poster, 
                is_lotto=lotto,
                email=email,
@@ -74,4 +76,5 @@ def endend(request):
 def end(request):
     if 'uid' not in request.session or request.session['datapostcnt'] == 0:
         raise PermissionDenied
+    print('end loaded by uid=%d' % request.session['uid'])
     return render(request, 'experiment/end.html')
