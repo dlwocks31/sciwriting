@@ -96,12 +96,12 @@ function experimentend() {
 	$('#infotext')
 		.text('실험이 종료되었습니다! 잠시 후 자동으로 다음 화면으로 넘어갑니다.');
 	$('.exprow')
-		.fadeOut(1000);
+		.fadeOut(2000);
 	$('#maindata')
 		.val(JSON.stringify(data));
 	setTimeout(function() {
 		$('#mainform').submit();	
-	}, 2000);		
+	}, 2500);		
 }
 
 

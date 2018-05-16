@@ -3,12 +3,12 @@
 {% block content %}
 <div class="row emptyline">
 	<div class="col">
-		<h3 class="text-center" id="infotext">실험 시작 버툰을 눌러 시작해 주세요.</p>
+		<h3 class="text-center title" id="infotext">실험 시작 버툰을 눌러 시작해 주세요.</h3>
 	</div>
 </div>
 {% block exp %}
 {% endblock %}
-<div class="row emptyline hide exprow">
+<div class="row hide exprow">
 	<div class="col-12">
 		<h3 class="text-center" id="question">5&#215;3=?</h3>
 	</div>
@@ -28,7 +28,7 @@
 	</div>
 </div>
 <div class="row justify-content-center emptyline">
-	<div class="col-3">
+	<div class="col-6 col-sm-5 col-md-4">
 		<a class="btn btn-primary btn-block" id="mainbtn" href="{% url 'end' %}">실험 시작</a>
 	</div>
 </div>
