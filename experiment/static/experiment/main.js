@@ -5,7 +5,13 @@ String.prototype.format = function() {
   }
   return a
 }
-
+let ans, choices;
+data = {'questions':[],'answeredTime':[],'iscorrect':[]};
+timecnt = 0;
+MAXQCNT = 10
+currqcnt = 0
+hasquestion = false;
+var timer;
 function genchoice(i1, i2) {
 	correctAt = Math.floor(Math.random() * 4)
 	ret = [0,0,0,0];
@@ -15,7 +21,7 @@ function genchoice(i1, i2) {
 			continue;
 		}
 		t = Math.floor(Math.random()*8);
-		if(t==0)
+		if(t == 0)
 			ret[i] = (i1-1)*i2;
 		else if(t == 1)
 			ret[i] = (i1+1)*i2;
@@ -34,8 +40,7 @@ function genchoice(i1, i2) {
 	}
 	return ret;
 }
-let ans, choices;
-data = {'questions':[],'answeredTime':[],'iscorrect':[]};
+
 function putquestion() {
 	i1 = Math.round(Math.random()*12+3);
 	i2 = Math.round(Math.random()*13+2);
@@ -45,36 +50,61 @@ function putquestion() {
 	$('#question')
 		.text("{0}×{1}=??".format(i1, i2));
 	for(j=0; j<4; j++)
-		$('#btn'+ j).text(choices[j]);
+		$('#btn'+ (j+1)).text(choices[j]);
+	hasquestion = true;
+	console.log('hasquestion set to true');
 }
-MAXQCNT = 10
-currqcnt = 0
+
 function btnclick(i) {
+	if(!hasquestion)
+		return false;
+	hasquestion = false;
+	console.log('hasquestion set to false');
 	if(ans == choices[i-1]) {
 		data['iscorrect'].push(1);
+		$('#btn'+i)
+			.removeClass('btn-light')
+			.addClass('btn-success');
+		setTimeout(function() {
+			$('#btn'+i)
+				.removeClass('btn-success')
+				.addClass('btn-light');
+		}, 100);
 	} else {
 		data['iscorrect'].push(0);
+		$('#btn'+i)
+			.removeClass('btn-light')
+			.addClass('btn-danger');
+		setTimeout(function() {
+			$('#btn'+i)
+				.removeClass('btn-danger')
+				.addClass('btn-light');
+		}, 100);
 	}
 	data['answeredTime'].push(timecnt);
 	currqcnt++;
 	$('#remainq')
 		.text(currqcnt + '/' + MAXQCNT);
-	putquestion();
 	if(MAXQCNT == currqcnt)
 		experimentend();
+	else
+		setTimeout(putquestion, 100);
+	
 }
 function experimentend() {
+	clearInterval(timer);
 	$('#infotext')
 		.text('실험이 종료되었습니다! 잠시 후 자동으로 다음 화면으로 넘어갑니다.');
 	$('.exprow')
-		.addClass('hide');
+		.fadeOut(1000);
 	$('#maindata')
 		.val(JSON.stringify(data));
 	setTimeout(function() {
 		$('#mainform').submit();	
-	}, 1500);		
+	}, 2000);		
 }
-timecnt = 0;
+
+
 $( document )
 	.ready( function() {
 		$('#mainbtn').click(function() {
@@ -88,7 +118,7 @@ $( document )
 				.text('실험 종료')
 				.off('click')
 				.addClass('hide');
-			var id = setInterval(function() {
+			timer = setInterval(function() {
 				timecnt++;
 				min = String(Math.floor(timecnt/600));
 				sec = String(Math.floor((timecnt%600)/10));
@@ -99,7 +129,7 @@ $( document )
 				$('#time')
 					.text("{0}:{1}.{2}".format(min, sec, msec));
 				if(timecnt == 32767) {
-					clearInterval(id);
+					clearInterval(timer);
 				}
 			}, 100);
 			putquestion();
