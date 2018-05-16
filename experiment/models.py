@@ -15,3 +15,5 @@ class Result(models.Model):
     email = models.CharField('Email of the person', max_length=128)
     is_receive_rep = models.BooleanField('Whether to receive report afterward')
     is_reward = models.BooleanField('Whether to participate in reward chucheom.')
+    ipaddr = models.CharField('IP address of the person', max_length=16)
+    phonenum = models.CharField('Phone number of the person', max_length=20)

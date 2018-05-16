@@ -18,6 +18,12 @@ def postdata(request):
     print(request.POST['data'])
     return redirect('end')
 
+def postinfo(request):
+    print(request.POST)
+    return redirect('endend')
+
+def endend(request):
+    return render(request, 'experiment/endend.html')
 
 def end(request):
     return render(request, 'experiment/end.html')

@@ -43,7 +43,7 @@ function putquestion() {
 	choices = genchoice(i1, i2);
 	data['questions'].push("{0} {1}".format(i1, i2));
 	$('#question')
-		.text("{0}&times;{1}=??".format(i1, i2));
+		.text("{0}×{1}=??".format(i1, i2));
 	for(j=0; j<4; j++)
 		$('#btn'+ j).text(choices[j]);
 }
@@ -68,8 +68,6 @@ function experimentend() {
 		.text('실험이 종료되었습니다! 잠시 후 자동으로 다음 화면으로 넘어갑니다.');
 	$('.exprow')
 		.addClass('hide');
-	$('#mainbtn')
-		.removeClass('hide');
 	$('#maindata')
 		.val(JSON.stringify(data));
 	setTimeout(function() {
@@ -106,5 +104,20 @@ $( document )
 			}, 100);
 			putquestion();
 			return false;
-		})
+		});
+		$('#reportchk').change(function() {
+			if(this.checked) {
+				$('#emaildiv').removeClass('hide');
+			} else {
+				$('#emaildiv').addClass('hide');
+			}
+		});
+		$('#lottochk').change(function() {
+			if(this.checked) {
+				$('#phonediv').removeClass('hide');
+			} else {
+				$('#phonediv').addClass('hide');
+			}
+		});
 });
+
