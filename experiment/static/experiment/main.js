@@ -6,7 +6,8 @@ String.prototype.format = function() {
   return a
 }
 let ans, choices;
-data = {'questions':[],'answeredTime':[],'iscorrect':[]};
+data = {'mode':0,'questions':[],'answeredTime':[],'iscorrect':[]};
+hastime = true;
 timecnt = 0;
 MAXQCNT = 10
 currqcnt = 0
@@ -107,6 +108,14 @@ function experimentend() {
 
 $( document )
 	.ready( function() {
+		if($('#time').length) {
+			data['mode'] = 'hastime';
+			hastime = true;
+		}
+		else {
+			data['mode'] = 'notime';
+			hastime = false;
+		}
 		$('#mainbtn').click(function() {
 			$('.exprow')
 				.removeClass('hide');
@@ -118,20 +127,22 @@ $( document )
 				.text('실험 종료')
 				.off('click')
 				.addClass('hide');
-			timer = setInterval(function() {
-				timecnt++;
-				min = String(Math.floor(timecnt/600));
-				sec = String(Math.floor((timecnt%600)/10));
-				msec = String(timecnt%10);
-				if(sec.length == 1) {
-					sec = "0" + sec;
-				}
-				$('#time')
-					.text("{0}:{1}.{2}".format(min, sec, msec));
-				if(timecnt == 32767) {
-					clearInterval(timer);
-				}
-			}, 100);
+			if(hastime) {
+				timer = setInterval(function() {
+					timecnt++;
+					min = String(Math.floor(timecnt/600));
+					sec = String(Math.floor((timecnt%600)/10));
+					msec = String(timecnt%10);
+					if(sec.length == 1) {
+						sec = "0" + sec;
+					}
+					$('#time')
+						.text("{0}:{1}.{2}".format(min, sec, msec));
+					if(timecnt == 32767) {
+						clearInterval(timer);
+					}
+				}, 100);				
+			}
 			putquestion();
 			return false;
 		});
