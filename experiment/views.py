@@ -19,6 +19,7 @@ def index(request):
         u.save()
         request.session['uid'] = u.id
         request.session['datapostcnt'] = 0
+        print('User with uid=%d generated. ipaddr=%d.' % ip)
     print('index loaded. uid is %d' % request.session['uid'])
     return render(request, 'experiment/index.html')
 
