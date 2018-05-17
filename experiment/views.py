@@ -19,7 +19,7 @@ def index(request):
         u.save()
         request.session['uid'] = u.id
         request.session['datapostcnt'] = 0
-        print('User with uid=%d generated. ip="%d", useragent="%s", referer="%s"' % (u.id,ip,useragent,referer))
+        print('User with uid=%d generated. ip="%s", useragent="%s", referer="%s"' % (u.id,ip,useragent,referer))
     print('index loaded. uid is %d' % request.session['uid'])
     return render(request, 'experiment/index.html')
 
