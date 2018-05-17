@@ -43,12 +43,6 @@ function genchoice(i1, i2) {
 		else if(t == 7)
 			ret[i] = i1*i2-10;
 	}
-	str = 'selected choice:'
-	for(i=0;i<8;i++) {
-		if(selected[i])
-			str=str+i+' ';
-	}
-	console.log(str);
 	return ret;
 }
 
@@ -63,14 +57,12 @@ function putquestion() {
 	for(j=0; j<4; j++)
 		$('#btn'+ (j+1)).text(choices[j]);
 	hasquestion = true;
-	console.log('hasquestion set to true');
 }
 
 function btnclick(i) {
 	if(!hasquestion)
 		return false;
 	hasquestion = false;
-	console.log('hasquestion set to false');
 	if(ans == choices[i-1]) {
 		data['iscorrect'].push(1);
 		$('#btn'+i)
