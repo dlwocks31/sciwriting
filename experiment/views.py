@@ -19,7 +19,7 @@ def index(request):
         u.save()
         request.session['uid'] = u.id
         request.session['datapostcnt'] = 0
-        print('User with uid=%d generated. ipaddr=%d.' % ip)
+        print('User with uid=%d generated. ip="%d", useragent="%s", referer="%s"' % (u.id,ip,useragent,referer))
     print('index loaded. uid is %d' % request.session['uid'])
     return render(request, 'experiment/index.html')
 
@@ -59,7 +59,7 @@ def postinfo(request):
     email = request.POST['email'] if poster else ''
     lotto = True if 'lotto' in request.POST else False
     phone = request.POST['phone'] if lotto else ''
-    print("info posted by uid=%d. poster=%d,lotto=%d,email=%s,phone=%s."%(request.session['uid'],poster,lotto,email,phone))
+    print('info posted by uid=%d. poster=%d,lotto=%d,email="%s",phone="%s".'%(request.session['uid'],poster,lotto,email,phone))
     s = Survey(is_poster=poster, 
                is_lotto=lotto,
                email=email,
