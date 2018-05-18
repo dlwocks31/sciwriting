@@ -9,7 +9,7 @@ let ans, choices;
 data = {'mode':0,'questions':[],'answeredTime':[],'iscorrect':[]};
 hastime = true;
 timecnt = 0;
-MAXQCNT = 20
+MAXQCNT = 25
 currqcnt = 0
 hasquestion = false;
 var timer;
