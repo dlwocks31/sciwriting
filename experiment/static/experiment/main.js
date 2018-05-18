@@ -26,7 +26,7 @@ function genchoice(i1, i2) {
 		while(selected[t] || (i1*i2-10<=0 && t == 7))
 			t = Math.floor(Math.random()*8);
 		selected[t] = true;
-		if(t == 0)
+		if(t == 0
 			ret[i] = (i1-1)*i2;
 		else if(t == 1)
 			ret[i] = (i1+1)*i2;
@@ -47,8 +47,12 @@ function genchoice(i1, i2) {
 }
 
 function putquestion() {
-	i1 = Math.round(Math.random()*12+4);
-	i2 = Math.round(Math.random()*12+4);
+	i1 = Math.round(Math.random()*11+5);
+	i2 = Math.round(Math.random()*11+4);
+	while(i1 == 10 || i2 == 10) {
+		i1 = Math.round(Math.random()*12+4);
+		i2 = Math.round(Math.random()*12+4);
+	}
 	ans = i1 * i2;
 	choices = genchoice(i1, i2);
 	data['questions'].push("{0} {1}".format(i1, i2));
