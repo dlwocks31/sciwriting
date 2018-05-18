@@ -24,6 +24,12 @@ def analyze_average_final_time(data):
     std = stdev(int(d['answeredTime'][-1]) for d in data)
     return avg, med, std
 
+def analyze_average_intermediate_time(data):
+    avg = [mean(int(t) for d in data) for t in d['answeredTime']]
+    med = [median(int(d['answeredTime'][-1]) for d in data)]
+    std = stdev(int(d['answeredTime'][-1]) for d in data)
+    return avg, med, std
+
 def analyze_average_correct(data):
     avg = mean(mean(d['iscorrect']) for d in data)
     med = median(mean(d['iscorrect']) for d in data)
