@@ -26,7 +26,7 @@ function genchoice(i1, i2) {
 		while(selected[t] || (i1*i2-10<=0 && t == 7))
 			t = Math.floor(Math.random()*8);
 		selected[t] = true;
-		if(t == 0
+		if(t == 0)
 			ret[i] = (i1-1)*i2;
 		else if(t == 1)
 			ret[i] = (i1+1)*i2;
