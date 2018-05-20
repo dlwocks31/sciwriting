@@ -82,31 +82,37 @@ function btnclick(i) {
 	if(ans == choices[i-1]) {
 		data['iscorrect'].push(1);
 		correctcnt++;
-		$('#btn'+i)
-			.removeClass('btn-light')
-			.addClass('btn-success');
-		setTimeout(function() {
+		if(hastime) {
 			$('#btn'+i)
-				.removeClass('btn-success')
-				.addClass('btn-light');
-		}, 100);
+				.removeClass('btn-light')
+				.addClass('btn-success');
+			setTimeout(function() {
+				$('#btn'+i)
+					.removeClass('btn-success')
+					.addClass('btn-light');
+			}, 100);
+		}
 	} else {
 		data['iscorrect'].push(0);
-		$('#btn'+i)
-			.removeClass('btn-light')
-			.addClass('btn-danger');
-		setTimeout(function() {
+		if(hastime) {
 			$('#btn'+i)
-				.removeClass('btn-danger')
-				.addClass('btn-light');
-		}, 100);
+				.removeClass('btn-light')
+				.addClass('btn-danger');
+			setTimeout(function() {
+				$('#btn'+i)
+					.removeClass('btn-danger')
+					.addClass('btn-light');
+			}, 100);
+		}
 	}
 	data['answeredTime'].push(timecnt);
 	currqcnt++;
 	$('#remainq')
 		.text(currqcnt + '/' + MAXQCNT);
+	/*
 	$('#rate')
 		.text('정답율:\n'+Math.round(correctcnt/currqcnt*100) + '%');
+	*/
 	if(MAXQCNT == currqcnt)
 		experimentend();
 	else
@@ -121,8 +127,8 @@ function experimentend() {
 	$('#maindata')
 		.val(JSON.stringify(data));
 	setTimeout(function() {
-		$('#mainform').submit();	
-	}, 2500);		
+		$('#mainform').submit();
+	}, 2500);
 }
 
 
@@ -165,7 +171,7 @@ $( document )
 				if(timecnt == 32767) {
 					clearInterval(timer);
 				}
-			}, 100);				
+			}, 100);
 			putquestion();
 		});
 		$('#reportchk').change(function() {
@@ -183,4 +189,3 @@ $( document )
 			}
 		});
 });
-
