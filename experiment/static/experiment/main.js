@@ -10,21 +10,23 @@ data = {'mode':0,'questions':[],'answeredTime':[],'iscorrect':[]};
 hastime = true;
 timecnt = 0;
 MAXQCNT = 25
-currqcnt = 0
+currqcnt = 0;
+correctcnt = 0;
 hasquestion = false;
 var timer;
 function genchoice(i1, i2) {
 	correctAt = Math.floor(Math.random() * 4)
 	ret = [0,0,0,0];
-	selected = [false,false,false,false,false,false,false,false];
+	selected = [false,false,false,false,false,false,false,false,false];
 	for(i=0;i<4;i++) {
 		if(correctAt == i) {
 			ret[i] = i1*i2;
 			continue;
 		}
-		t = Math.floor(Math.random()*8);
-		while(selected[t] || (i1*i2-10<=0 && t == 7))
-			t = Math.floor(Math.random()*8);
+		CHOICECNT = 10;
+		t = Math.floor(Math.random()*CHOICECNT);
+		while(selected[t])
+			t = Math.floor(Math.random()*CHOICECNT);
 		selected[t] = true;
 		if(t == 0)
 			ret[i] = (i1-1)*i2;
@@ -35,13 +37,17 @@ function genchoice(i1, i2) {
 		else if(t == 3)
 			ret[i] = i1*(i2+1);
 		else if(t == 4)
-			ret[i] = i1*i2-1;
+			ret[i] = i1*i2-(Math.round(Math.random()*3)+1);
 		else if(t == 5)
-			ret[i] = i1*i2+1;
+			ret[i] = i1*i2+(Math.round(Math.random()*3)+1);
 		else if(t == 6)
 			ret[i] = i1*i2+10;
 		else if(t == 7)
 			ret[i] = i1*i2-10;
+		else if(t == 8)
+			ret[i] = i1*i2+20;
+		else if(t == 9)
+			ret[i] = i1*i2-20;
 	}
 	return ret;
 }
@@ -69,6 +75,7 @@ function btnclick(i) {
 	hasquestion = false;
 	if(ans == choices[i-1]) {
 		data['iscorrect'].push(1);
+		correctcnt++;
 		$('#btn'+i)
 			.removeClass('btn-light')
 			.addClass('btn-success');
@@ -92,11 +99,12 @@ function btnclick(i) {
 	currqcnt++;
 	$('#remainq')
 		.text(currqcnt + '/' + MAXQCNT);
+	$('#rate')
+		.text('정답율:\n'+Math.round(correctcnt/currqcnt*100) + '%');
 	if(MAXQCNT == currqcnt)
 		experimentend();
 	else
 		setTimeout(putquestion, 100);
-	
 }
 function experimentend() {
 	clearInterval(timer);

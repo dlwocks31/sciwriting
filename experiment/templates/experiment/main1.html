@@ -1,12 +1,18 @@
 {% extends 'experiment/main.html' %}
 
 {% block exp %}
-<div class="row emptyline hide exprow">
-	<div class="col-6">
-		<h4 id="time" class="text-center">00:05</h4>
+<div class="row emptyline hide exprow justify-content-center">
+	<div class="col-4 col-md-3">
+		<h4 id="time" class="text-center">00:00.0</h4>
 	</div>
-	<div class="col-6">
-		<h4 id="remainq" class="text-center">5/30</h4>
+	<div class="col-4 col-md-3">
+		<h4 id="rate" class="text-center">정답율:&#10;0%</h4>
 	</div>
+	<div class="col-4 col-md-3">
+		<h4 id="remainq" class="text-center">0/25</h4>
+	</div>
+</div>
+<div class="exprow hide">
+	<hr>
 </div>
 {% endblock %}

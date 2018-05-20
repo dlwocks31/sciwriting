@@ -1,6 +1,9 @@
 .emptyline {
 	margin-top: 15px;
 }
+.emptyline-lg {
+	margin-top: 40px;
+}
 
 .answerbtn, .answerbtn:hover {
 	border: 1px solid black;
@@ -19,12 +22,21 @@
 	display: none;
 }
 
+#mainbtn {
+	color: #fff;
+}
+
+.exprow > div, .answerrow > div {
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
 @media (min-width: 768px) { 
 	.title {
 		font-size: 200%;
 	}
-}
-
-#mainbtn {
-	color: #fff;
+	.exprow > div, .answerrow > div {
+		padding-right: 10px;
+		padding-left: 10px;
+	}
 }
