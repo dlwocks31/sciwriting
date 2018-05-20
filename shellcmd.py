@@ -1,5 +1,5 @@
 from statistics import mean, median, stdev
-import datetime
+from datetime import datetime
 import json
 
 import django
