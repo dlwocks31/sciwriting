@@ -141,7 +141,9 @@ $( document )
 			$('.exprow')
 				.removeClass('hide');
 			$('#infotext')
-				.text('실험이 진행중입니다.')
+				.text('실험이 진행중입니다.');
+			$('#katalknotice')
+				.addClass('hide');
 			$('#remainq')
 				.text('0/'+MAXQCNT);
 			$(this)
