@@ -48,10 +48,10 @@ function genchoice(i1, i2) {
 
 function putquestion() {
 	i1 = Math.round(Math.random()*11+5);
-	i2 = Math.round(Math.random()*11+4);
+	i2 = Math.round(Math.random()*11+5);
 	while(i1 == 10 || i2 == 10) {
-		i1 = Math.round(Math.random()*12+4);
-		i2 = Math.round(Math.random()*12+4);
+		i1 = Math.round(Math.random()*11+5);
+		i2 = Math.round(Math.random()*11+5);
 	}
 	ans = i1 * i2;
 	choices = genchoice(i1, i2);
