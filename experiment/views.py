@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.template import loader
 from django.views.decorators.http import require_POST
 from django.utils import timezone
+from ipware import get_client_ip
 
 from experiment.models import User, Result, Survey
 
@@ -14,7 +15,7 @@ def index(request):
     if 'uid' not in request.session or not User.objects.filter(pk=request.session['uid']):
         referer = request.META.get('HTTP_REFERER') or ''
         useragent = request.META.get('HTTP_USER_AGENT') or ''
-        ip = request.META.get('REMOTE_ADDR') or ''
+        ip, is_routable = get_client_ip(request) or ''
         u = User(ipaddr=ip, useragent=useragent, referer=referer)
         u.save()
         request.session['uid'] = u.id

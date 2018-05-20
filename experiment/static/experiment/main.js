@@ -13,6 +13,8 @@ MAXQCNT = 25
 currqcnt = 0;
 correctcnt = 0;
 hasquestion = false;
+lasti1 = 0;
+lasti2 = 0;
 var timer;
 function genchoice(i1, i2) {
 	correctAt = Math.floor(Math.random() * 4)
@@ -53,12 +55,16 @@ function genchoice(i1, i2) {
 }
 
 function putquestion() {
-	i1 = Math.floor(Math.random()*11+5);
-	i2 = Math.floor(Math.random()*11+5);
-	while(i1 == 10 || i2 == 10) {
-		i1 = Math.floor(Math.random()*11+5);
-		i2 = Math.floor(Math.random()*11+5);
+	LEFT = 5;
+	RIGHT = 15; // inclusive on both end
+	i1 = Math.floor(Math.random()*(RIGHT-LEFT+1)+LEFT);
+	i2 = Math.floor(Math.random()*(RIGHT-LEFT+1)+LEFT);
+	while(i1 == 10 || i2 == 10 || (i1 == lasti1 && i2 == lasti2) || (i1 == lasti2 && i2 == lasti1)) {
+		i1 = Math.floor(Math.random()*(RIGHT-LEFT+1)+LEFT);
+		i2 = Math.floor(Math.random()*(RIGHT-LEFT+1)+LEFT);
 	}
+	lasti1 = i1;
+	lasti2 = i2;
 	ans = i1 * i2;
 	choices = genchoice(i1, i2);
 	data['questions'].push("{0} {1}".format(i1, i2));
@@ -159,7 +165,6 @@ $( document )
 				}
 			}, 100);				
 			putquestion();
-			return false;
 		});
 		$('#reportchk').change(function() {
 			if(this.checked) {
