@@ -55,8 +55,8 @@ function genchoice(i1, i2) {
 }
 
 function putquestion() {
-	LEFT = 5;
-	RIGHT = 15; // inclusive on both end
+	LEFT = 6;
+	RIGHT = 16; // inclusive on both end
 	i1 = Math.floor(Math.random()*(RIGHT-LEFT+1)+LEFT);
 	i2 = Math.floor(Math.random()*(RIGHT-LEFT+1)+LEFT);
 	while(i1 == 10 || i2 == 10 || (i1 == lasti1 && i2 == lasti2) || (i1 == lasti2 && i2 == lasti1)) {
