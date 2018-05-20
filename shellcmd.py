@@ -1,10 +1,10 @@
 from statistics import mean, median, stdev
 import json
+
+import django
+django.setup()
 from experiment.models import User, Result
-try:
-    from django.utils import timezone
-except:
-    pass
+from django.utils import timezone
 
 class Namespace:
     def __init__(self, **kwargs):
