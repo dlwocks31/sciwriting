@@ -37,9 +37,9 @@ function genchoice(i1, i2) {
 		else if(t == 3)
 			ret[i] = i1*(i2+1);
 		else if(t == 4)
-			ret[i] = i1*i2-(Math.round(Math.random()*3)+1);
+			ret[i] = i1*i2-(Math.floor(Math.random()*3)+1);
 		else if(t == 5)
-			ret[i] = i1*i2+(Math.round(Math.random()*3)+1);
+			ret[i] = i1*i2+(Math.floor(Math.random()*3)+1);
 		else if(t == 6)
 			ret[i] = i1*i2+10;
 		else if(t == 7)
@@ -53,11 +53,11 @@ function genchoice(i1, i2) {
 }
 
 function putquestion() {
-	i1 = Math.round(Math.random()*11+5);
-	i2 = Math.round(Math.random()*11+5);
+	i1 = Math.floor(Math.random()*11+5);
+	i2 = Math.floor(Math.random()*11+5);
 	while(i1 == 10 || i2 == 10) {
-		i1 = Math.round(Math.random()*11+5);
-		i2 = Math.round(Math.random()*11+5);
+		i1 = Math.floor(Math.random()*11+5);
+		i2 = Math.floor(Math.random()*11+5);
 	}
 	ans = i1 * i2;
 	choices = genchoice(i1, i2);
