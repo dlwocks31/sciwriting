@@ -11,7 +11,7 @@ from experiment.models import User, Result, Survey
 
 
 def index(request):
-    if 'uid' not in request.session:
+    if 'uid' not in request.session or not User.objects.filter(pk=request.session['uid']):
         referer = request.META.get('HTTP_REFERER') or ''
         useragent = request.META.get('HTTP_USER_AGENT') or ''
         ip = request.META.get('REMOTE_ADDR') or ''
