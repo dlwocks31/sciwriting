@@ -4,8 +4,10 @@ import json
 
 import django
 django.setup()
-from experiment.models import User, Result
+from openpyxl import Workbook
 from django.utils import timezone
+
+from experiment.models import User, Result
 
 class Namespace:
     def __init__(self, **kwargs):
@@ -17,15 +19,18 @@ def get_all_firstresult(uid_min=0):
     data_notime = []
     for u in ls:
         rawdata = json.loads(u.firstresult.data)
+        d = {k:v for k,v in rawdata.items() if k != 'mode'}
+        d.update({'uid': u.id})
         if rawdata['mode'] == 'hastime':
-            data_hastime.append({k:v for k,v in rawdata.items() if k != 'mode'})
+            data_hastime.append(d)
         elif rawdata['mode'] == 'notime':
-            data_notime.append({k:v for k,v in rawdata.items() if k != 'mode'})
+            data_notime.append(d)
     return data_hastime, data_notime
 
 FMT = '%Y-%m-%d %H:%M %z'
 BEFORE_MICHUT = "2018-05-20 17:00 +0900"
-TIME = BEFORE_MICHUT
+BEFORE_MICHUT_2 = "2018-05-20 20:40 +0900"
+TIME = BEFORE_MICHUT_2
 
 def getnow():
     return timezone.now().strftime(FMT)
@@ -71,6 +76,26 @@ def analyze_question_time(data):
             else:
                 qdict[q] = [d['answeredTime'][i] if i == 0 else d['answeredTime'][i]-d['answeredTime'][i-1]]
     return {k:(mean(v), median(v), stdev(v) if len(v)>=2 else 0) for k,v in qdict.items()}
+
+def export(datas, name='data.xlsx'):
+    '''
+    datas: Return value of get_all_firstresult(). So we can call like export(get_all_firstresult())
+    name: name.
+    '''
+    wb = Workbook()
+    wss = [wb.create_sheet("hastime"), wb.create_sheet("notime")]
+    for data, ws in zip(datas, wss):
+        ws['A1'] = 'uid'
+        for i in range(2, 27):
+            ws.cell(row=1, column=i, value='Q%d'%(i-1))
+        for i, d in enumerate(data):
+            ws.cell(row=4*i+2, column=1, value=d['uid'])
+            for j in range(2, 27):
+                ws.cell(row=4*i+2, column=j, value=d['questions'][j-2])
+                ws.cell(row=4*i+3, column=j, value=d['answeredTime'][j-2])
+                ws.cell(row=4*i+4, column=j, value=d['iscorrect'][j-2])
+    wb.save(name)
+    print('Done')
 
 if __name__ == '__main__':
     __import__('code').interact('Sciwriting data analyze shell', local=locals())
