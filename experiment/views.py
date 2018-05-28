@@ -82,4 +82,5 @@ def end(request):
     return render(request, 'experiment/end.html')
 
 def lotto(request):
+    print('lotto loaded. uid is %d', request.session.get('uid') or -1)
     return render(request, 'experiment/lotto.html')
