@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, random
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -80,3 +80,6 @@ def end(request):
         raise PermissionDenied
     print('end loaded by uid=%d' % request.session['uid'])
     return render(request, 'experiment/end.html')
+
+def lotto(request):
+    return render(request, 'experiment/lotto.html')

@@ -8,5 +8,6 @@ urlpatterns = [
     path('end', views.end, name='end'),
     path('postdata', views.postdata, name='postdata'),
     path('postinfo', views.postinfo, name='postinfo'),
-    path('endend', views.endend, name='endend')
+    path('endend', views.endend, name='endend'),
+    path('lotto', views.lotto, name='lotto')
 ]
