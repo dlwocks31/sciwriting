@@ -91,4 +91,4 @@ def keyboard(request):
 
 @csrf_exempt
 def message(request):
-    return JsonResponse({'text':'What I received(repr(request.POST)): %s' % repr(request.POST)})
+    return JsonResponse({'message':{'text':'서버에서 받은 정보는 아래와 같습니다(repr(request.POST)): %s' % repr(request.POST)}})
