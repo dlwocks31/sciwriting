@@ -87,3 +87,6 @@ def lotto(request):
 
 def keyboard(request):
     return JsonResponse({'type':'text'})
+
+def message(request):
+    return JsonResponse({'text':'What I received(repr(request.POST)): %s' % repr(request.POST)})

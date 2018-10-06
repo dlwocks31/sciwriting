@@ -11,4 +11,5 @@ urlpatterns = [
     path('endend', views.endend, name='endend'),
     path('lotto', views.lotto, name='lotto'),
     path('keyboard', views.keyboard, name='keyboard')
+    path('message', views.message, name='message')
 ]
