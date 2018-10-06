@@ -5,6 +5,7 @@ from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import PermissionDenied
 from django.template import loader
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from ipware import get_client_ip
 
@@ -88,5 +89,6 @@ def lotto(request):
 def keyboard(request):
     return JsonResponse({'type':'text'})
 
+@csrf_exempt
 def message(request):
     return JsonResponse({'text':'What I received(repr(request.POST)): %s' % repr(request.POST)})
