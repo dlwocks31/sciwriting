@@ -9,5 +9,6 @@ urlpatterns = [
     path('postdata', views.postdata, name='postdata'),
     path('postinfo', views.postinfo, name='postinfo'),
     path('endend', views.endend, name='endend'),
-    path('lotto', views.lotto, name='lotto')
+    path('lotto', views.lotto, name='lotto'),
+    path('keyboard', views.keyboard, name='keyboard')
 ]

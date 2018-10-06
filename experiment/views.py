@@ -1,7 +1,7 @@
 from random import randint, random
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import PermissionDenied
 from django.template import loader
 from django.views.decorators.http import require_POST
@@ -84,3 +84,6 @@ def end(request):
 def lotto(request):
     print('lotto loaded. uid is %d', request.session.get('uid') or -1)
     return render(request, 'experiment/lotto.html')
+
+def keyboard(request):
+    return JsonResponse({'type':'text'})
