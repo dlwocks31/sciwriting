@@ -1,4 +1,5 @@
 from random import randint, random
+import json
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
@@ -91,4 +92,8 @@ def keyboard(request):
 
 @csrf_exempt
 def message(request):
-    return JsonResponse({'message':{'text':'서버에서 받은 정보는 아래와 같습니다(repr(request.POST)): %s' % repr(request.POST)}})
+    received = json.loads(request.body.decode('utf-8'))
+    return JsonResponse(
+        {'message':
+            {'text':'서버에서 받은 정보는 아래와 같습니다(repr(request.POST)): %s' % repr(received)}
+        })
